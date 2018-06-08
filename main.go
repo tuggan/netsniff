@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"bytes"
-	"encoding/hex"
 	"fmt"
 	"github.com/krolaw/dhcp4"
 	"log"
@@ -30,9 +29,9 @@ func (h *DHCPHandler) ServeDHCP(p dhcp4.Packet, msgType dhcp4.MessageType, optio
 
 	switch msgType {
 	case dhcp4.Discover:
-		fmt.Println("DHCP Discover")
+		log.Println("DHCP Discover")
 	case dhcp4.Request:
-		fmt.Println("DHCP Request")
+		log.Println("DHCP Request")
 		if options[dhcp4.OptionRequestedIPAddress] != nil {
 			//fmt.Println("Requested IP: " + string(options[dhcp4.OptionRequestedIPAddress]))
 			ip := make(net.IP, len(options[dhcp4.OptionRequestedIPAddress]))
@@ -40,22 +39,22 @@ func (h *DHCPHandler) ServeDHCP(p dhcp4.Packet, msgType dhcp4.MessageType, optio
 			dev.IP = ip
 		}
 		if bytes.Compare(p.CIAddr(), net.IP{0, 0, 0, 0}) != 0 {
-			fmt.Println("Using actual ip address: ", p.CIAddr().String())
+			log.Println("Using actual ip address: ", p.CIAddr().String())
 			ip := make(net.IP, len(p.CIAddr()))
 			copy(ip, p.CIAddr())
 			dev.IP = ip
 		}
 	case dhcp4.Release:
-		fmt.Println("DHCP Release")
+		log.Println(">>> DHCP Release <<<")
 	case dhcp4.Decline:
-		fmt.Println("DHCP Decline")
+		log.Println(">>> DHCP Decline <<<")
 	}
 	//fmt.Println("Name: " + string(p.SName()))
 	//fmt.Println("MAC: " + p.CHAddr().String())
-	fmt.Println("CIAddr: " + p.CIAddr().String())
-	fmt.Println("GIAddr: " + p.GIAddr().String())
-	fmt.Println("SIAddr: " + p.SIAddr().String())
-	fmt.Println("YIAddr: " + p.YIAddr().String())
+	//fmt.Println("CIAddr: " + p.CIAddr().String())
+	//fmt.Println("GIAddr: " + p.GIAddr().String())
+	//fmt.Println("SIAddr: " + p.SIAddr().String())
+	//fmt.Println("YIAddr: " + p.YIAddr().String())
 
 	if options[dhcp4.OptionHostName] != nil {
 		//fmt.Println("Hostname: " + string(options[dhcp4.OptionHostName]))
@@ -68,8 +67,8 @@ func (h *DHCPHandler) ServeDHCP(p dhcp4.Packet, msgType dhcp4.MessageType, optio
 
 	if options[81] != nil {
 		//fmt.Println("FQDN: " + string(options[81]))
-		fmt.Println(hex.Dump(options[81]))
-		dev.FQDN = string(options[81])
+		//fmt.Println(hex.Dump(options[81]))
+		dev.FQDN = string(options[81][3:])
 	}
 
 	h.devices[p.CHAddr().String()] = dev
@@ -106,12 +105,12 @@ func main() {
 		if strings.Compare(text, "q") == 0 {
 			run = false
 		} else {
-			for key, val := range handler.devices {
-				fmt.Println("Key: " + key)
-				fmt.Println("Name: " + val.Name)
-				fmt.Println("FQDN: " + val.FQDN)
-				fmt.Println("MAC: " + val.MAC.String())
-				fmt.Println("IP: " + val.IP.String())
+			for _, val := range handler.devices {
+				log.Printf("Name: %s | FQDN: %s | MAC: %s | IP: %s\n",
+					val.Name,
+					val.FQDN,
+					val.MAC.String(),
+					val.IP.String())
 			}
 		}
 	}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.PageTitle}}</title>
+</head>
+<body>
+<p>Haha! this is the fucking template! :)</p>
+
+<table>
+    {{range .Devices}}
+        <tr>
+            <td>
+                {{.Name}}
+            </td>
+            <td>
+                {{.FQDN}}
+            </td>
+            <td>
+                {{.MAC}}
+            </td>
+            <td>
+                {{.IP}}
+            </td>
+        </tr>
+    {{end}}
+</table>
+
+</body>
+</html>
