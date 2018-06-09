@@ -1,30 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>{{.PageTitle}}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="/static/img/index.ico" type="image/x-icon"/>
 </head>
+
 <body>
-<p>Haha! this is the fucking template! :)</p>
+<div class="jumbotron text-center" id="tron">
+    <h1>{{.PageTitle}}</h1>
+    <p>Active hosts on the network</p>
+</div>
 
-<table>
-    {{range .Devices}}
-        <tr>
-            <td>
+<div class="container">
+    <div class="panel panel-default">
+        <table class="table table-striped" id="table">
+            <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    FQDN
+                </th>
+                <th class='hidden-xs hidden-sm'>
+                    MAC
+                </th>
+                <th class='hidden-xs'>
+                    IP
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {{range .Devices}}
+            <tr>
+                <td>
                 {{.Name}}
-            </td>
-            <td>
+                </td>
+                <td>
                 {{.FQDN}}
-            </td>
-            <td>
+                </td>
+                <td class='hidden-xs hidden-sm'>
                 {{.MAC}}
-            </td>
-            <td>
+                </td>
+                <td class='hidden-xs'>
                 {{.IP}}
-            </td>
-        </tr>
-    {{end}}
-</table>
-
+                </td>
+            </tr>
+            {{end}}
+            </tbody>
+        </table>
+        <div class="panel-body" id="bottompanel"><p id="date"></p></div>
+    </div>
+</div>
 </body>
 </html>

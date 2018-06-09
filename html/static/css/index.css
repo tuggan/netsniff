@@ -1,0 +1,42 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td {
+    padding: 3px 8px 3px 8px;
+}
+
+#bottompanel {
+    padding: 0px;
+}
+
+#date {
+    padding: 12px;
+    margin: 0px;
+}
+
+.jumbotron {
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+
+#table > tbody > tr > td:nth-child(2) {
+    font-weight: bold;
+}
+
+#table > tbody > tr:hover {
+    background-color: #e0e0e0;
+}
+
+#checkmark {
+    display: inline-flex;
+    vertical-align: middle;
+    color: #66bb6a;
+    font-size: 16px;
+}
+
+/*
+#tron {
+    background-image: url("https://www.councilofnonprofits.org/sites/default/files/resources-tools/images/feature-network-approach.jpg");
+    background-position: -100px -57px;
+} */
