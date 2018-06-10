@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 	"netsniff/dhcp"
+	"netsniff/ping"
 	"netsniff/web"
 	"os"
 	"strings"
@@ -94,6 +95,9 @@ func main() {
 	//	os.Exit(2)
 	//}
 	//go dhcp4.Serve(conn2, handler)
+
+	sweeper := ping.Sweeper{Devices: handler.devices, Nets: []net.IPNet{{IP: net.IP{10, 13, 37, 1}, Mask: net.CIDRMask(24, 32)}}}
+	go sweeper.Sweep()
 
 	go web.Serve(handler.devices)
 
